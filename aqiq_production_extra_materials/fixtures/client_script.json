@@ -1,0 +1,13 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Work Order",
+  "enabled": 1,
+  "modified": "2024-07-30 12:50:38.394673",
+  "module": "Aqiq Alternative Materials",
+  "name": "Work Order",
+  "script": "frappe.ui.form.on('Work Order', {\r\n    refresh(frm) {\r\n        \r\n            var start_btn = frm.add_custom_button(__('Extra Raw Material'), function() {\r\n                frappe.call({\r\n                    method: \"aqiq_production_extra_materials.aqiq_production_extra_materials.api.rest.make_stock_entry\",\r\n                    args: {\r\n                        \"work_order_id\": frm.doc.name,\r\n                        \"purpose\": \"Material Transfer for Manufacture\",\r\n                        \"qty\": 1,\r\n                        \"posting_date\": frm.doc.planned_start_date\r\n                    },\r\n                    callback: function(r) {\r\n                        var doclist = frappe.model.sync(r.message);\r\n                        frappe.set_route(\"Form\", doclist[0].doctype, doclist[0].name);\r\n                    }\r\n                });\r\n            });\r\n            start_btn.addClass('btn-primary');\r\n     \r\n    }\r\n});\r\n",
+  "view": "Form"
+ }
+]

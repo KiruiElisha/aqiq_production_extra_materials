@@ -227,3 +227,26 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+doc_events = {
+    "Stock Entry": {
+        "on_submit": "aqiq_production_extra_materials.aqiq_production_extra_materials.api.rest.update_work_order_items"
+    }
+}
+
+fixtures = [
+    {
+        "dt": "Client Script",
+        "filters": [
+            ["name", "in", ["Work Order"]]
+        ]
+    },
+    {
+        "dt": "Custom Field",
+        "filters": [
+            ["dt", "in", ["Work Order Item"]],
+            ["is_system_generated", "=", 0]
+        ]
+    }
+   
+
+]
